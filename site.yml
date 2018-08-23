@@ -2,7 +2,7 @@
 - name: Install Git
   hosts: web
   become: yes
-  gather_facts: false
+  gather_facts: true
   roles:
     - git
         

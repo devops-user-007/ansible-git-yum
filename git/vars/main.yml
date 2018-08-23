@@ -1,2 +1,12 @@
 ---
 # vars file for git
+git_dependencies:
+  - gettext-devel
+  - expat-devel
+  - curl-devel
+  - zlib-devel
+  - perl-devel
+  - openssl-devel
+  - subversion-perl
+  - make
+  - gcc

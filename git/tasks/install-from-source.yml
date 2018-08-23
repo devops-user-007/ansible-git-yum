@@ -1,0 +1,27 @@
+---
+
+- name: Install Git Dependencies
+  package: "name={{ item }} state=present"
+  with_items: "{{ git_dependencies }}"
+  when: git_dependencies is defined
+
+- name: Download Git
+  get_url:
+    url: "https://www.kernel.org/pub/software/scm/git/git-{{ git_version }}.tar.gz"
+    dest: "{{ git_download_location }}/git-{{ git_version }}.tar.gz"
+
+- name: Unarchive Git
+  unarchive:
+    src: "{{ git_download_location }}/git-{{ git_version }}.tar.gz"
+    dest: "{{ git_download_location }}"
+    creates: "{{ git_download_location }}/git-{{ git_version }}/README"
+    copy: no
+
+- name: Build git
+  command: >
+    make prefix={{ git_install_path }} {{ item }}
+    chdir={{ git_download_location }}/git-{{ git_version }}
+  with_items:
+    - all
+    - install
+  become: yes
